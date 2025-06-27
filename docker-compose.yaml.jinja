@@ -1,0 +1,40 @@
+# docker-compose.yml (untuk menjalankan aplikasi Contact Us dari image Docker lokal)
+
+version: '3.8'
+
+services:
+  contact-app:
+    # Gunakan image yang sudah Anda bangun secara lokal.
+    # Tidak perlu "build: ." karena image sudah ada.
+    image: andhitr/php-contact-app:latest 
+    container_name: my-contact-app # Nama container diubah
+    restart: always
+
+    # Karena kode aplikasi sudah disalin ke dalam image saat build,
+    # kita tidak perlu lagi menggunakan volume untuk kode sumber.
+    # volumes:
+    #   - ./public:/var/www/html/ # Baris ini tidak lagi diperlukan
+
+    networks:
+      # Penting: Hubungkan ke jaringan Traefik yang sama
+      - traefik-proxy-network 
+
+    labels:
+      # Aktifkan Traefik untuk layanan ini
+      - "traefik.enable=true"
+
+      # --- Router HTTP (Port 80) ---
+      # Buat router untuk traffic HTTP
+      # URL diubah agar menggunakan variabel `hostname` dari Copier.
+      - "traefik.http.routers.contact-us-web.rule=Host(`{{ hostname }}`)"
+      # Gunakan entrypoint 'web' dari Traefik (yang di-map ke port 80 HTTP)
+      - "traefik.http.routers.contact-us-web.entrypoints=web"
+      
+      # --- Service untuk Traefik ---
+      # Tentukan port internal container yang akan dilayani oleh Traefik
+      - "traefik.http.services.contact-us-web.loadbalancer.server.port=80" 
+
+networks:
+  # Penting: Deklarasikan jaringan eksternal yang dibuat oleh konfigurasi Traefik Anda
+  traefik-proxy-network:
+    external: true

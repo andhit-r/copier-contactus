@@ -1,0 +1,13 @@
+# copier.yml
+# Ini adalah file konfigurasi untuk template Copier.
+
+# Mendefinisikan variabel 'hostname' yang akan diminta dari pengguna.
+hostname:
+  type: str
+  # Pesan yang akan ditampilkan kepada pengguna.
+  help: Masukkan nama host (misal: myapp.localhost atau app.domain.com)
+  # Nilai default jika pengguna tidak memasukkan apa pun.
+  default: myapp.localhost
+
+# Anda dapat menambahkan variabel lain di sini jika diperlukan,
+# misalnya, nama layanan, port, dll.
