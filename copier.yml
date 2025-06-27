@@ -7,7 +7,6 @@ hostname:
   # Pesan yang akan ditampilkan kepada pengguna.
   help: Masukkan nama host (misal: myapp.localhost atau app.domain.com)
   # Nilai default jika pengguna tidak memasukkan apa pun.
-  default: myapp.localhost
+  default: myapp.localhost # PERBAIKAN: Default value langsung di sini
 
-# Anda dapat menambahkan variabel lain di sini jika diperlukan,
-# misalnya, nama layanan, port, dll.
+# Anda dapat menambahkan variabel lain di sini jika diperlukan.
